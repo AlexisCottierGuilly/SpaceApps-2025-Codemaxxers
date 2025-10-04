@@ -85,6 +85,10 @@ public class ConnectionPlacement : MonoBehaviour
 
         lineRenderer.SetPosition(0, pos1);
         lineRenderer.SetPosition(1, pos2);
+
+        lineRenderer.startColor = GameManager.instance.colors.GetColor(start.substance);
+        lineRenderer.endColor = GameManager.instance.colors.GetColor(end.substance);
+
         connection.SetActive(true);
     }
     

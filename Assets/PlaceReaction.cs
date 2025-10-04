@@ -15,7 +15,6 @@ public class PlaceReaction : MonoBehaviour
     public GameObject Create(ReactionType reactionType)
     {
         GameObject reactionObject = Instantiate(reactionPrefab, Vector3.zero, Quaternion.identity);
-        reactionObject.GetComponent<ReactionLoader>().LoadReaction();
         reactionObject.name = reactionType.ToString();
         reactionObject.SetActive(true);
         return reactionObject;

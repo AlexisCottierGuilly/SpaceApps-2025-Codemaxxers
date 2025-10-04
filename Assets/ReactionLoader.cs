@@ -27,6 +27,7 @@ public class ReactionLoader : MonoBehaviour
             newConnection.name = reactant.ToString();
             newConnection.GetComponent<ConnectionManager>().substance = reactant;
             newConnection.GetComponent<ConnectionManager>().connectionType = ConnectionType.Reactant;
+            newConnection.GetComponent<Renderer>().material.color = GameManager.instance.colors.GetColor(reactant);
 
             newConnection.SetActive(true);
         }
@@ -42,7 +43,7 @@ public class ReactionLoader : MonoBehaviour
             newConnection.name = product.ToString();
             newConnection.GetComponent<ConnectionManager>().substance = product;
             newConnection.GetComponent<ConnectionManager>().connectionType = ConnectionType.Product;
-
+            newConnection.GetComponent<Renderer>().material.color = GameManager.instance.colors.GetColor(product);
             newConnection.SetActive(true);
         }
         productsParent.GetComponent<ArrangeVerticalLayout>().UpdateLayout();
