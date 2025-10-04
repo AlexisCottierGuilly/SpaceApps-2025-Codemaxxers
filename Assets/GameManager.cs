@@ -18,4 +18,11 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public static T CloneScriptableObject<T>(T original) where T : ScriptableObject
+    {
+        T clone = ScriptableObject.CreateInstance<T>();
+        EditorUtility.CopySerialized(original, clone);
+        return clone;
+    }
 }

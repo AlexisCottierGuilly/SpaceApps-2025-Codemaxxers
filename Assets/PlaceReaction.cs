@@ -13,7 +13,7 @@ public class PlaceReaction : MonoBehaviour
     public GameObject Create(Reaction reaction)
     {
         GameObject reactionObject = Instantiate(reactionPrefab, Vector3.zero, Quaternion.identity);
-        reactionObject.GetComponent<Process>().reaction = reaction;
+        reactionObject.GetComponent<Process>().reaction = GameManager.instance.CloneScriptableObject(reaction);
         //reactionObject.name = reactionType.ToString();
         reactionObject.SetActive(true);
         return reactionObject;

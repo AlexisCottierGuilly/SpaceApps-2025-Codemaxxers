@@ -18,7 +18,7 @@ public class ConnectionPlacement : MonoBehaviour
             foreach (Transform reactant in process.reactantsParent.transform)
             {
                 ConnectionManager connectionManager = reactant.GetComponent<ConnectionManager>();
-                if (MouseOverConnectionKnob(reactant.gameObject, mousePos))
+                if (!connectionManager.isConnected && MouseOverConnectionKnob(reactant.gameObject, mousePos))
                 {
                     return connectionManager;
                 }
@@ -26,7 +26,7 @@ public class ConnectionPlacement : MonoBehaviour
             foreach (Transform product in process.productsParent.transform)
             {
                 ConnectionManager connectionManager = product.GetComponent<ConnectionManager>();
-                if (MouseOverConnectionKnob(product.gameObject, mousePos))
+                if (!connectionManager.isConnected && MouseOverConnectionKnob(product.gameObject, mousePos))
                 {
                     return connectionManager;
                 }
@@ -102,6 +102,9 @@ public class ConnectionPlacement : MonoBehaviour
 
         start.parentProcess.outputConnections[start.indexInProcess] = connectionClass;
         end.parentProcess.inputConnections[end.indexInProcess] = connectionClass;
+
+        start.isConnected = true;
+        end.isConnected = true;
 
         connection.SetActive(true);
     }
