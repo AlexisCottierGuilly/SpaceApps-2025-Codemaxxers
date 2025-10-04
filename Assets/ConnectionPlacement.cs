@@ -57,7 +57,8 @@ public class ConnectionPlacement : MonoBehaviour
                 {
                     if (selectedConnectionKnob != clickedObject &&
                     selectedConnectionKnob.connectionType != clickedObject.connectionType &&
-                    selectedConnectionKnob.substance == clickedObject.substance)
+                    (selectedConnectionKnob.substance == clickedObject.substance 
+                    || selectedConnectionKnob.substance == Substance.Any || clickedObject.substance == Substance.Any))
                     {
                         Debug.Log("Connected " + selectedConnectionKnob.substance + " to " + clickedObject.substance);
 
