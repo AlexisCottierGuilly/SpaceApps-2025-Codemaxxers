@@ -44,10 +44,3 @@ public class Reaction : ScriptableObject
         return outputRates;
     }
 }
-
-public enum Substance {
-    Water,
-    Methane,
-    CarbonDioxide,
-    Dihydrogen,
-}
