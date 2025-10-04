@@ -3,20 +3,46 @@ using System.Collections.Generic;
 using Mono.Cecil;
 using UnityEngine;
 
+public enum Substance {
+    Water,
+    Methane,
+    CarbonDioxide,
+    Dihydrogen,
+}
+
+
+
 public class Process : MonoBehaviour
 {
     public Reaction reaction; //the reaction this process performs
-    public List<Tuple<Process, int>> inputConnections; //list of processes that provide input to this process, and the index into the products of that process
-    public List<Tuple<Process, int>> outputConnections; //list of processes that receive output from this process, and the index into the reactants of that process
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
+    public List<Connection> inputConnections; //list of connections that provide input to this process
+    public List<Connection> outputConnections; //list of connections that take output from this process
 
+    public List<float> SubstanceCost = new List<float>{1f, 2f, 1f, 1f};
+    public void AssignRates()
+    {
+        float[] inputRates = new float[reaction.reactants.Length];
+        // gather input rates from input connections
+        for (int i = 0; i < inputConnections.Count; i++)
+        {
+            inputRates[i] = inputConnections[i].rate;
+        }
+
+        float[] outputRates = reaction.calculateOutputRates(inputRates);
+        for (int i = 0; i < outputConnections.Count; i++)
+        {
+            outputConnections[i].rate = outputRates[i];
+            outputConnections[i].calculated = true;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public float GetWasteCost()
     {
-
+        float wasteCost = 0f;
+        for (int i = 0; i < reaction.reactants.Length; i++)
+        {
+            wasteCost += (reaction.reactantCoefficients[i] - inputConnections[i].rate) * SubstanceCost[(int)reaction.reactants[i]];
+        }
+        return wasteCost;
     }
 }
