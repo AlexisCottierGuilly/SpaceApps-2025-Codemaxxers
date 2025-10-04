@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Connection
+public class Connection : MonoBehaviour
 {
     public Process sourceProcess;
     public int sourceProductIndex;

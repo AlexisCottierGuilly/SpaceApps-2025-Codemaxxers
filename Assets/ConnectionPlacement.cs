@@ -14,8 +14,8 @@ public class ConnectionPlacement : MonoBehaviour
         Vector2 mousePos = GetMouseWorldPosition();
         foreach (Transform reaction in reactionsParent.transform)
         {
-            ReactionLoader reactionLoader = reaction.GetComponent<ReactionLoader>();
-            foreach (Transform reactant in reactionLoader.reactantsParent.transform)
+            Process process = reaction.GetComponent<Process>();
+            foreach (Transform reactant in process.reactantsParent.transform)
             {
                 ConnectionManager connectionManager = reactant.GetComponent<ConnectionManager>();
                 if (MouseOverConnectionKnob(reactant.gameObject, mousePos))
@@ -23,7 +23,7 @@ public class ConnectionPlacement : MonoBehaviour
                     return connectionManager;
                 }
             }
-            foreach (Transform product in reactionLoader.productsParent.transform)
+            foreach (Transform product in process.productsParent.transform)
             {
                 ConnectionManager connectionManager = product.GetComponent<ConnectionManager>();
                 if (MouseOverConnectionKnob(product.gameObject, mousePos))
@@ -75,6 +75,9 @@ public class ConnectionPlacement : MonoBehaviour
 
     void CreateConnectionLine(ConnectionManager start, ConnectionManager end)
     {
+        if (start.connectionType == ConnectionType.Reactant)
+            (start, end) = (end, start); // swap to ensure start is reactant and end is product
+
         GameObject connection = Instantiate(connectionPrefab, connectionsParent.transform);
         LineRenderer lineRenderer = connection.GetComponent<LineRenderer>();
         lineRenderer.positionCount = 2;
@@ -88,6 +91,16 @@ public class ConnectionPlacement : MonoBehaviour
 
         lineRenderer.startColor = GameManager.instance.colors.GetColor(start.substance);
         lineRenderer.endColor = GameManager.instance.colors.GetColor(end.substance);
+
+        Connection connectionClass = connection.GetComponent<Connection>();
+        connectionClass.sourceProcess = start.parentProcess;
+        connectionClass.targetProcess = end.parentProcess;
+
+        connectionClass.sourceProductIndex = start.indexInProcess;
+        connectionClass.targetReactantIndex = end.indexInProcess;
+
+        start.parentProcess.outputConnections[start.indexInProcess] = connectionClass;
+        end.parentProcess.inputConnections[end.indexInProcess] = connectionClass;
 
         connection.SetActive(true);
     }

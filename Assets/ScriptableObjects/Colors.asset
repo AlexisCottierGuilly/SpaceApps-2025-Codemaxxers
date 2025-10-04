@@ -14,10 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colorCodes:
   - substance: 0
-    color: {r: 0.07700247, g: 0.19321485, b: 0.3962264, a: 1}
+    color: {r: 1, g: 1, b: 1, a: 1}
   - substance: 1
+    color: {r: 0.07700247, g: 0.19321485, b: 0.3962264, a: 1}
+  - substance: 3
     color: {r: 0.4264151, g: 0.24825275, b: 0.15367034, a: 1}
   - substance: 2
     color: {r: 0.09132784, g: 0.381132, b: 0.1722356, a: 1}
-  - substance: 3
+  - substance: 4
     color: {r: 0.4943396, g: 0.4683541, b: 0.13710928, a: 1}
+  - substance: 5
+    color: {r: 0, g: 0, b: 0, a: 1}
+  - substance: 6
+    color: {r: 0.15804197, g: 0.470778, b: 0.5698112, a: 1}
+  - substance: 7
+    color: {r: 0.3207547, g: 0.3207547, b: 0.3207547, a: 1}

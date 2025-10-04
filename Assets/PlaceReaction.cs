@@ -1,21 +1,20 @@
 using UnityEngine;
-
-public enum ReactionType
-{
-    Sabatier
-}
+using System.Collections.Generic;
 
 public class PlaceReaction : MonoBehaviour
 {
     public GameObject reactionPrefab;
     public GameObject reactionsParent;
 
+    public List<Reaction> reactions;
+
     [HideInInspector] public GameObject currentReaction;
 
-    public GameObject Create(ReactionType reactionType)
+    public GameObject Create(Reaction reaction)
     {
         GameObject reactionObject = Instantiate(reactionPrefab, Vector3.zero, Quaternion.identity);
-        reactionObject.name = reactionType.ToString();
+        reactionObject.GetComponent<Process>().reaction = reaction;
+        //reactionObject.name = reactionType.ToString();
         reactionObject.SetActive(true);
         return reactionObject;
     }
@@ -37,7 +36,9 @@ public class PlaceReaction : MonoBehaviour
             }
             else
             {
-                currentReaction = Create(ReactionType.Sabatier);
+                // choose random reaction
+                int rng = Random.Range(0, reactions.Count);
+                currentReaction = Create(reactions[rng]);
             }
         }
 
@@ -57,18 +58,11 @@ public class PlaceReaction : MonoBehaviour
             }
         }
     }
-    
+
     Vector2 GetMouseWorldPosition()
     {
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = 10.0f; // Distance from the camera
         return Camera.main.ScreenToWorldPoint(mousePos);
     }
-}
-
-[System.Serializable]
-public class ReactionTypes
-{
-    public ReactionType type;
-    public Reaction reaction;
 }
