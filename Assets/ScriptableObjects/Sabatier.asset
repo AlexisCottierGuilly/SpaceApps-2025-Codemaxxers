@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Sabatier
   m_EditorClassIdentifier: 
   reactants: 0200000003000000
-  products: 0000000001000000
+  products: 0000000002000000
   reactantCoefficients: []
   productCoefficients: []
   deltaH: 0

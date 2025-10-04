@@ -13,7 +13,7 @@ public class ReactionLoader : MonoBehaviour
         LoadReaction();
     }
 
-    void LoadReaction()
+    public void LoadReaction()
     {
         if (reaction == null) return;
 
@@ -23,7 +23,12 @@ public class ReactionLoader : MonoBehaviour
         foreach (var reactant in reaction.reactants)
         {
             GameObject newConnection = Instantiate(connectionPrefab, reactantsParent.transform);
+            
             newConnection.name = reactant.ToString();
+            newConnection.GetComponent<ConnectionManager>().substance = reactant;
+            newConnection.GetComponent<ConnectionManager>().connectionType = ConnectionType.Reactant;
+            newConnection.GetComponent<Renderer>().material.color = GameManager.instance.colors.GetColor(reactant);
+
             newConnection.SetActive(true);
         }
         reactantsParent.GetComponent<ArrangeVerticalLayout>().UpdateLayout();
@@ -34,7 +39,11 @@ public class ReactionLoader : MonoBehaviour
         foreach (var product in reaction.products)
         {
             GameObject newConnection = Instantiate(connectionPrefab, productsParent.transform);
+
             newConnection.name = product.ToString();
+            newConnection.GetComponent<ConnectionManager>().substance = product;
+            newConnection.GetComponent<ConnectionManager>().connectionType = ConnectionType.Product;
+            newConnection.GetComponent<Renderer>().material.color = GameManager.instance.colors.GetColor(product);
             newConnection.SetActive(true);
         }
         productsParent.GetComponent<ArrangeVerticalLayout>().UpdateLayout();
