@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 public class ArrangeVerticalLayout : MonoBehaviour
 {
     public float spacing = 1.0f;
@@ -11,18 +11,23 @@ public class ArrangeVerticalLayout : MonoBehaviour
     {
         UpdateLayout();
     }
-
-    public void Start()
+    
+    void Update()
     {
         UpdateLayout();
     }
 
     public void UpdateLayout()
     {
-        List<Transform> children = gameObject.GetComponentsInChildren<Transform>().ToList();
-        children.Remove(transform);
+        List<Transform> children = new List<Transform>();
+        foreach (Transform child in transform)
+            children.Add(child);
 
-        float startHeight = spacing * children.Count / 2f - spacing / 2f;
+        children = children.OrderBy(c => c.GetSiblingIndex()).ToList();
+
+        float totalHeight = spacing * (children.Count - 1);
+        float startHeight = totalHeight / 2f;
+
         foreach (Transform child in children)
         {
             child.localPosition = new Vector3(0, startHeight, 0);
