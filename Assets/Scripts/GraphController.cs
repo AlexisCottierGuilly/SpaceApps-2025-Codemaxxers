@@ -53,7 +53,7 @@ public class GraphController : MonoBehaviour
         {
             if (process.reaction != null)
             {
-                totalDeltaH += process.reaction.deltaH * process.inputConnections[0].rate;
+                totalDeltaH += process.reaction.deltaH * process.outputConnections[0].rate;
             }
         }
         return totalDeltaH;
@@ -66,7 +66,7 @@ public class GraphController : MonoBehaviour
         {
             if (process.reaction != null)
             {
-                totalTemp += process.reaction.temperature * process.inputConnections[0].rate;
+                totalTemp += process.reaction.temperature;
             }
         }
         return totalTemp;

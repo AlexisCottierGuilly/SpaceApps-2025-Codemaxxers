@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using Mono.Cecil;
 using UnityEngine;
 
-public enum Substance {
+public enum Substance
+{
+    Any,
     Water,
     Methane,
     CarbonDioxide,
     Dihydrogen,
+    Carbon,
+    Dioxygen,
+    CarbonMonoxide,
 }
 
 
@@ -18,7 +23,7 @@ public class Process : MonoBehaviour
     public List<Connection> inputConnections; //list of connections that provide input to this process
     public List<Connection> outputConnections; //list of connections that take output from this process
 
-    public List<float> SubstanceCost = new List<float>{1f, 2f, 1f, 1f};
+    public List<float> SubstanceCost = new List<float>{0f, 1f, 2f, 1f, 1f, 1f};
     public void AssignRates()
     {
         float[] inputRates = new float[reaction.reactants.Length];

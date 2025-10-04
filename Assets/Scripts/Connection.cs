@@ -18,4 +18,9 @@ public class Connection
         this.rate = -1f;
         this.calculated = false;
     }
+
+    public bool IsInExcess()
+    {
+        return rate < targetProcess.reaction.reactantCoefficients[targetReactantIndex];
+    }
 }
