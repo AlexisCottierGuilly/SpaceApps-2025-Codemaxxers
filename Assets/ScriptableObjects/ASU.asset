@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ASU
   m_EditorClassIdentifier: 
   reactants: 
-  products: 
+  products: 02000000
   reactantCoefficients: []
   productCoefficients: []
-  deltaH: 0
+  deltaH: 66
   temperature: 25

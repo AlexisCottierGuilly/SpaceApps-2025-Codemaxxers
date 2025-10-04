@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a78a0e8be21bd44da579c9f14392a06, type: 3}
   m_Name: Water Electrolysis
   m_EditorClassIdentifier: 
-  reactants: 
-  products: 
-  reactantCoefficients: []
-  productCoefficients: []
-  deltaH: 0
+  reactants: 01000000
+  products: 0400000006000000
+  reactantCoefficients:
+  - 2
+  productCoefficients:
+  - 2
+  - 1
+  deltaH: 142
   temperature: 25

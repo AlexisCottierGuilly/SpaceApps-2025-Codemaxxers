@@ -19,5 +19,5 @@ MonoBehaviour:
   productCoefficients:
   - 1
   - 3
-  deltaH: 0
-  temperature: 25
+  deltaH: 37.7
+  temperature: 1065

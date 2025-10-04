@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a78a0e8be21bd44da579c9f14392a06, type: 3}
   m_Name: RWGS
   m_EditorClassIdentifier: 
-  reactants: 
-  products: 
-  reactantCoefficients: []
-  productCoefficients: []
-  deltaH: 0
-  temperature: 25
+  reactants: 0700000001000000
+  products: 0300000004000000
+  reactantCoefficients:
+  - 1
+  - 1
+  productCoefficients:
+  - 1
+  - 1
+  deltaH: -41.2
+  temperature: 310

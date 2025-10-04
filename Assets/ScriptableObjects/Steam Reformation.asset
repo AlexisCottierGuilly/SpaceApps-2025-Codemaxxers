@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a78a0e8be21bd44da579c9f14392a06, type: 3}
   m_Name: Steam Reformation
   m_EditorClassIdentifier: 
-  reactants: 
-  products: 
-  reactantCoefficients: []
-  productCoefficients: []
-  deltaH: 0
-  temperature: 25
+  reactants: 0200000001000000
+  products: 0700000004000000
+  reactantCoefficients:
+  - 1
+  - 1
+  productCoefficients:
+  - 1
+  - 3
+  deltaH: 206
+  temperature: 800

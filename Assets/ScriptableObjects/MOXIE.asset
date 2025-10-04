@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a78a0e8be21bd44da579c9f14392a06, type: 3}
   m_Name: MOXIE
   m_EditorClassIdentifier: 
-  reactants: 
-  products: 
-  reactantCoefficients: []
-  productCoefficients: []
+  reactants: 03000000
+  products: 0700000006000000
+  reactantCoefficients:
+  - 2
+  productCoefficients:
+  - 2
+  - 1
   deltaH: 0
-  temperature: 25
+  temperature: 800
