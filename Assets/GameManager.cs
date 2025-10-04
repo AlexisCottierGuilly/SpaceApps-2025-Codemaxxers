@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEditor;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public static T CloneScriptableObject<T>(T original) where T : ScriptableObject
+    public T CloneScriptableObject<T>(T original) where T : ScriptableObject
     {
         T clone = ScriptableObject.CreateInstance<T>();
         EditorUtility.CopySerialized(original, clone);
