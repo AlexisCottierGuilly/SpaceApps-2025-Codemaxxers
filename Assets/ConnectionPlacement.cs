@@ -123,8 +123,12 @@ public class ConnectionPlacement : MonoBehaviour
 
                         GameManager.instance.graphController.connections.Remove(connection);
                         GameManager.instance.graphController.updateConnections();
-                        GameManager.instance.graphController.CalculateRates();
-                        Debug.Log("Enthalpy: " + GameManager.instance.graphController.GetTotalDeltaH());
+                        GameManager.instance.graphController.CalculateRates();                
+                        float deltaH = GameManager.instance.graphController.GetTotalDeltaH();
+                        if (deltaH >= 0)
+                            totalDeltaHText.text = "ΔH: +" + deltaH.ToString("0.##") + " kJ";
+                        else
+                            totalDeltaHText.text = "ΔH: " + deltaH.ToString("0.##") + " kJ";
                         Destroy(connection.gameObject);
                     }
                 }
