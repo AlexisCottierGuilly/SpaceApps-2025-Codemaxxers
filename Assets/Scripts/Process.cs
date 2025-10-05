@@ -13,7 +13,15 @@ public enum Substance
     Dioxygen,
     CarbonMonoxide,
     Ethylene,
-    Plastic
+    Propene,
+    Acetylene,
+    Styrene,
+    Benzene,
+    Polyethylene,
+    PolyethyleneTerephthalate,
+    Polystyrene,
+    PolyvinylChloride,
+    Toxic
 }
 
 public class Process : MonoBehaviour
@@ -43,21 +51,37 @@ public class Process : MonoBehaviour
     }
 
     // BackEnd
-    public void AssignRates()
+    public bool AssignRates()
     {
+        bool changed = false;
         float[] inputRates = new float[reaction.reactants.Count];
         // gather input rates from input connections
         for (int i = 0; i < inputConnections.Count; i++)
         {
+            if (inputConnections[i] == null || inputConnections[i].rate == -1f) return false; // cannot calculate rates if any input connection is missing or not flowing
             inputRates[i] = inputConnections[i].rate;
         }
 
         float[] outputRates = reaction.calculateOutputRates(inputRates);
+        Debug.Log("Process " + name + " calculated output rates: " + string.Join(", ", outputRates));
         for (int i = 0; i < outputConnections.Count; i++)
         {
+            if (outputConnections[i] == null) continue;
+            if (outputConnections[i].rate == outputRates[i]) continue;
+            if (outputRates[i] < 1e-6)
+            {
+                //loop is not viable, set to zero
+                changed = true;
+                outputConnections[i].rate = -1f;
+                outputConnections[i].updateRateText();
+                continue;
+            }
+            Debug.Log("Setting output connection " + i + " rate to " + outputRates[i]);
+            changed = true;
             outputConnections[i].rate = outputRates[i];
-            outputConnections[i].calculated = true;
+            outputConnections[i].updateRateText();
         }
+        return changed;
     }
 
     public float GetWasteCost()

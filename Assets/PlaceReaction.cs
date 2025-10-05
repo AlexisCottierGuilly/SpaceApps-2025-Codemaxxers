@@ -21,6 +21,7 @@ public class PlaceReaction : MonoBehaviour
         Sprite reactionSprite = Sprite.Create(reaction.icon, new Rect(0.0f, 0.0f, reaction.icon.width, reaction.icon.height), new Vector2(0.5f, 0.5f), 100.0f);
         reactionObject.GetComponent<Process>().icon.sprite = reactionSprite;
         reactionObject.SetActive(true);
+        GameManager.instance.graphController.processes.Add(reactionObject.GetComponent<Process>());
         return reactionObject;
     }
 
@@ -37,6 +38,7 @@ public class PlaceReaction : MonoBehaviour
         {
             if (currentReaction != null)
             {
+                GameManager.instance.graphController.processes.Remove(currentReaction.GetComponent<Process>());
                 Destroy(currentReaction);
                 currentReaction = null;
             }

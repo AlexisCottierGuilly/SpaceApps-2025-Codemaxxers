@@ -8,20 +8,19 @@ public class Connection : MonoBehaviour
     public Process targetProcess;
     public int targetReactantIndex;
     public float rate;
-    public bool calculated;
-
-    public Connection(Process sourceProcess, int sourceProductIndex, Process targetProcess, int targetReactantIndex)
-    {
-        this.sourceProcess = sourceProcess;
-        this.sourceProductIndex = sourceProductIndex;
-        this.targetProcess = targetProcess;
-        this.targetReactantIndex = targetReactantIndex;
-        this.rate = -1f;
-        this.calculated = false;
-    }
 
     public bool IsInExcess()
     {
         return rate < targetProcess.reaction.reactantCoefficients[targetReactantIndex];
+    }
+
+    public void updateRateText()
+    {
+        if (rateText != null)
+        {
+            TMPro.TextMeshProUGUI text = rateText.GetComponent<TMPro.TextMeshProUGUI>();
+            text.text = rate >= 0 ? rate.ToString("0.##") : "0";
+            text.color = rate >= 0 ? GameManager.instance.colors.GetColor(sourceProcess.reaction.products[sourceProductIndex]) : Color.white;
+        }
     }
 }

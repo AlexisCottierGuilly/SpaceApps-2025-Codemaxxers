@@ -101,10 +101,12 @@ public class ConnectionPlacement : MonoBehaviour
         start.isConnected = true;
         end.isConnected = true;
         connection.SetActive(true);
-        
-        UpdateConnectionLine(connection);
+
         GameManager.instance.graphController.connections.Add(connectionClass);
-        GameManager.instance.graphController.updateConnections(); 
+        GameManager.instance.graphController.updateConnections();
+        GameManager.instance.graphController.CalculateRates();
+        Debug.Log("Enthalpy: " + GameManager.instance.graphController.GetTotalDeltaH());
+        UpdateConnectionLine(connection);
     }
 
     public void UpdateConnectionLine(GameObject connection)
@@ -143,12 +145,6 @@ public class ConnectionPlacement : MonoBehaviour
 
         lineRenderer.startColor = GameManager.instance.colors.GetColor(start.substance);
         lineRenderer.endColor = GameManager.instance.colors.GetColor(end.substance);
-
-        // show text with current rate in connection
-        //print(connectionClass.rateText);
-        TextMeshProUGUI rateText = connectionClass.rateText.GetComponent<TextMeshProUGUI>();
-        rateText.text = connectionClass.rate >= 0 ? connectionClass.rate.ToString("0.##") : "";
-        rateText.color = lineRenderer.startColor;
 
         // the position is a little difficult.
         // first, if we got two elements in positions, it makes a diagonal. If the angle of the diagonal is more vertical, place the text at the right of the middle point of the diagonal

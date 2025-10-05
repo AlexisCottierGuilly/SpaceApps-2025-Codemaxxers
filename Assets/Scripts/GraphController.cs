@@ -7,42 +7,69 @@ public class GraphController : MonoBehaviour
     public List<Process> processes; //list of all processes in the graph
     public List<Connection> connections;
 
-    void CalculateRates()
+    public void dfs(Process p, HashSet<Process> visited, HashSet<Process> recStack, Connection cameFrom = null)
     {
+        if (recStack.Contains(p))
+        {
+            // Cycle detected
+            cameFrom.rate = cameFrom.targetProcess.reaction.reactantCoefficients[cameFrom.targetReactantIndex]; // set to stoichiometric rate initially
+            cameFrom.updateRateText();
+            Debug.Log("Cycle detected involving process: " + p.name + " via connection from " + cameFrom.sourceProcess.name + " to " + cameFrom.targetProcess.name);
+            return;
+        }
+
+        if (visited.Contains(p))
+            return;
+
+        visited.Add(p);
+        recStack.Add(p);
+
+        foreach (var conn in p.outputConnections)
+        {
+            if (conn != null)
+                dfs(conn.targetProcess, visited, recStack, conn);
+        }
+
+        recStack.Remove(p);
+    }
+    public void CalculateRates()
+    {
+        // identify cycles
+        HashSet<Process> visited = new();
+        HashSet<Process> recStack = new();
+        foreach (var process in processes)
+        {
+            if (!visited.Contains(process))
+            {
+                dfs(process, visited, recStack);
+            }
+            //set output of all processes with no inputs
+            if (process.reaction.reactants.Count == 0)
+            {
+                Debug.Log("Source process: " + process.name + " setting output rates to " + string.Join(", ", process.reaction.productCoefficients));
+                for (int i = 0; i < process.outputConnections.Count; i++)
+                {
+                    if (process.outputConnections[i] != null)
+                    {
+                        process.outputConnections[i].rate = process.reaction.productCoefficients[i];
+                        process.outputConnections[i].updateRateText();
+                    }
+                }
+            }
+        }
         // iterates through all processes and calculates the rates
+        int cnt = 0;
         while (true)
         {
             bool done = true;
             for (int i = 0; i < processes.Count; i++)
             {
-                Process p = processes[i];
                 // if all input connections are marked as calculated, calculate the output rates
                 //note that if there are no inputs, we assume it's a source process and can be calculated
-                bool calculate = true;
-                foreach (var conn in p.inputConnections)
-                {
-                    if (conn == null || !conn.calculated)
-                    {
-                        calculate = false;
-                        break;
-                    }
-                }
-                // do not recalculate if already calculated
-                foreach (var conn in p.outputConnections)
-                {
-                    if (conn != null && conn.calculated)
-                    {
-                        calculate = false;
-                        break;
-                    }
-                }
-                if (calculate)
-                {
-                    done = false;
-                    p.AssignRates();
-                }
+                done = done && !processes[i].AssignRates();
             }
-            if (done) break; // exit the loop if no more calculations can be done
+            cnt++;
+            if (done || cnt > 100) break; // exit the loop if no more calculations can be done
         }
     }
 
@@ -56,10 +83,8 @@ public class GraphController : MonoBehaviour
                 //find all connections that connect from an any to a specific substance
                 Substance sourceSubstance = conn.sourceProcess.reaction.products[conn.sourceProductIndex];
                 Substance targetSubstance = conn.targetProcess.reaction.reactants[conn.targetReactantIndex];
-                Debug.Log($"Connection from {sourceSubstance} to {targetSubstance}");
-                if (sourceSubstance == Substance.Any && targetSubstance != Substance.Any && conn.sourceProcess.reaction.reactionType == ReactionType.Polymorphic)
+                if (sourceSubstance == Substance.Any && targetSubstance != Substance.Any)
                 {
-                    Debug.Log("Updating polymorphic source process");
                     done = false;
                     //set all other connections from the source process to target substance
                     for (int i = 0; i < conn.sourceProcess.reaction.reactants.Count; i++)
@@ -81,9 +106,8 @@ public class GraphController : MonoBehaviour
 
                     GameManager.instance.connectionPlacement.UpdateConnectionLine(conn.gameObject);
                 }
-                if (sourceSubstance != Substance.Any && targetSubstance == Substance.Any && conn.targetProcess.reaction.reactionType == ReactionType.Polymorphic)
+                if (sourceSubstance != Substance.Any && targetSubstance == Substance.Any)
                 {
-                    Debug.Log("Updating polymorphic target process");
                     done = false;
                     //set all other connections to the source substance
                     for (int i = 0; i < conn.targetProcess.reaction.reactants.Count; i++)
@@ -115,7 +139,7 @@ public class GraphController : MonoBehaviour
         float totalDeltaH = 0f;
         foreach (var process in processes)
         {
-            if (process.reaction != null)
+            if (process.reaction != null && process.outputConnections[0] != null)
             {
                 totalDeltaH += process.reaction.deltaH * process.outputConnections[0].rate;
             }
@@ -123,20 +147,7 @@ public class GraphController : MonoBehaviour
         return totalDeltaH;
     }
 
-    public float GetTotalTemperature()
-    {
-        float totalTemp = 0f;
-        foreach (var process in processes)
-        {
-            if (process.reaction != null)
-            {
-                totalTemp += process.reaction.temperature;
-            }
-        }
-        return totalTemp;
-    }
-
-    public float GetToalWasteCost()
+    public float GetTotalWasteCost()
     {
         float totalWasteCost = 0f;
         foreach (var process in processes)

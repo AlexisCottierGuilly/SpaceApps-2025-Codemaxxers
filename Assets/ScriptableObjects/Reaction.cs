@@ -17,10 +17,6 @@ public class Reaction : ScriptableObject
     public List<float> reactantCoefficients; // Stoichiometric coefficients for reactants
     public List<float> productCoefficients; // Stoichiometric coefficients for products
     public float deltaH; // Change in enthalpy (kJ/mol) (negative if exothermic, as per convention)
-    public const float ROOM_TEMPERATURE_C = 25.0f;
-    public float temperature = ROOM_TEMPERATURE_C; // Temperature at which the reaction occurs (°C)
-
-    public ReactionType reactionType;
 
     public float[] calculateOutputRates(float[] inputRates)
     {
@@ -51,6 +47,7 @@ public class Reaction : ScriptableObject
         {
             outputRates[i] = limitingRatio * productCoefficients[i];
         }
+        Debug.Log("Output rates: " + string.Join(", ", outputRates));
         return outputRates;
     }
 }

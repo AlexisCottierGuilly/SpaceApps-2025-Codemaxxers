@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '2
+  m_text: '0
 
 '
   m_isRightToLeft: 0
@@ -297,7 +297,7 @@ MonoBehaviour:
   sourceProductIndex: 0
   targetProcess: {fileID: 0}
   targetReactantIndex: 0
-  rate: 0
+  rate: -1
   calculated: 0
 --- !u!1 &9200843274699877921
 GameObject:
