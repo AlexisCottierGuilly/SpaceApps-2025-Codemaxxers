@@ -16,7 +16,8 @@ MonoBehaviour:
   reactants: 
   products: 03000000
   reactantCoefficients: []
-  productCoefficients: []
+  productCoefficients:
+  - 1
   deltaH: 66
   temperature: 25
   reactionType: 0

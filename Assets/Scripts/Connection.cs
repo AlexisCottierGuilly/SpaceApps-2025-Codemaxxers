@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Connection : MonoBehaviour
 {
+    public GameObject rateText;
     public Process sourceProcess;
     public int sourceProductIndex;
     public Process targetProcess;

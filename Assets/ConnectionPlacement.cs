@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Animations;
 using System.Collections.Generic;
 using System;
+using TMPro;
 
 public class ConnectionPlacement : MonoBehaviour
 {
@@ -142,6 +143,49 @@ public class ConnectionPlacement : MonoBehaviour
 
         lineRenderer.startColor = GameManager.instance.colors.GetColor(start.substance);
         lineRenderer.endColor = GameManager.instance.colors.GetColor(end.substance);
+
+        // show text with current rate in connection
+        //print(connectionClass.rateText);
+        TextMeshProUGUI rateText = connectionClass.rateText.GetComponent<TextMeshProUGUI>();
+        rateText.text = connectionClass.rate >= 0 ? connectionClass.rate.ToString("0.##") : "";
+        rateText.color = lineRenderer.startColor;
+
+        // the position is a little difficult.
+        // first, if we got two elements in positions, it makes a diagonal. If the angle of the diagonal is more vertical, place the text at the right of the middle point of the diagonal
+        if (positions.Count == 2)
+        {
+            Vector3 midPoint = (positions[0] + positions[1]) / 2;
+            float angle = Mathf.Atan2(positions[1].y - positions[0].y, positions[1].x - positions[0].x) * Mathf.Rad2Deg;
+            if (Mathf.Abs(angle) > 45)
+            {
+                // more vertical
+                connectionClass.rateText.transform.position = midPoint + new Vector3(0.3f, 0, 0);
+            }
+            else
+            {
+                // more horizontal
+                connectionClass.rateText.transform.position = midPoint + new Vector3(0, 0.3f, 0);
+            }
+        }
+        else if (positions.Count == 4)
+        {
+            // if we got 4,
+            // if the distance between the two first points is higher than the dist between the two lasts, place the text above the middle of the line between the two first
+            // if not, place the distance above the middle of the line between the two lasts
+            float dist1 = Vector3.Distance(positions[0], positions[1]);
+            float dist2 = Vector3.Distance(positions[2], positions[3]);
+
+            if (dist1 > dist2)
+            {
+                Vector3 midPoint = (positions[0] + positions[1]) / 2;
+                connectionClass.rateText.transform.position = midPoint + new Vector3(0, 0.5f, 0);
+            }
+            else
+            {
+                Vector3 midPoint = (positions[2] + positions[3]) / 2;
+                connectionClass.rateText.transform.position = midPoint + new Vector3(0, 0.5f, 0);
+            }
+        }
     }
 
     List<Vector3> GetLinePositions(Vector3 start, Vector3 end, Connection connection)

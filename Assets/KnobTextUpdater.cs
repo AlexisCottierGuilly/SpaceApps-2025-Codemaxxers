@@ -5,8 +5,6 @@ public class KnobTextUpdater : MonoBehaviour
 {
     public ConnectionManager knob;
 
-    
-
     public GameObject leftPlacement;
     public GameObject rightPlacement;
 
@@ -39,5 +37,6 @@ public class KnobTextUpdater : MonoBehaviour
         }
 
         text.text = knob.coefficient.ToString("0.##");
+        text.color = GameManager.instance.colors.GetColor(knob.substance);
     }
 }
