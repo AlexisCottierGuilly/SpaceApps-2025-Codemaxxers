@@ -19,6 +19,8 @@ public class Process : MonoBehaviour
 {
     public Reaction reaction; //the reaction this process performs
 
+    public BoxCollider2D hitbox;
+
     public List<Connection> inputConnections; //list of connections that provide input to this process
     public List<Connection> outputConnections; //list of connections that take output from this process
 
@@ -112,5 +114,19 @@ public class Process : MonoBehaviour
             index++;
         }
         productsParent.GetComponent<ArrangeVerticalLayout>().UpdateLayout();
+    }
+
+    public void UpdateConnections()
+    {
+        foreach (var conn in inputConnections)
+        {
+            if (conn != null)
+                GameManager.instance.connectionPlacement.UpdateConnectionLine(conn.gameObject);
+        }
+        foreach (var conn in outputConnections)
+        {
+            if (conn != null)
+                GameManager.instance.connectionPlacement.UpdateConnectionLine(conn.gameObject);
+        }
     }
 }

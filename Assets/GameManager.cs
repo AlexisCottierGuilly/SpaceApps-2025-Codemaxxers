@@ -4,6 +4,8 @@ using UnityEditor;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    
+    public ConnectionPlacement connectionPlacement;
 
     public ColorCoding colors;
 

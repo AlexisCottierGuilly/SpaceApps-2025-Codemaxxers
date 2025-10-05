@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Animations;
 using System.Collections.Generic;
+using System;
 
 public class ConnectionPlacement : MonoBehaviour
 {
@@ -104,7 +105,7 @@ public class ConnectionPlacement : MonoBehaviour
         UpdateConnectionLine(connection);
     }
 
-    void UpdateConnectionLine(GameObject connection)
+    public void UpdateConnectionLine(GameObject connection)
     {
         // Only update line position
         LineRenderer lineRenderer = connection.GetComponent<LineRenderer>();
@@ -134,7 +135,7 @@ public class ConnectionPlacement : MonoBehaviour
             }
         }
 
-        List<Vector3> positions = GetLinePositions(start.transform.position, end.transform.position);
+        List<Vector3> positions = GetLinePositions(start.transform.position, end.transform.position, connectionClass);
         lineRenderer.positionCount = positions.Count;
         lineRenderer.SetPositions(positions.ToArray());
 
@@ -142,7 +143,7 @@ public class ConnectionPlacement : MonoBehaviour
         lineRenderer.endColor = GameManager.instance.colors.GetColor(end.substance);
     }
 
-    List<Vector3> GetLinePositions(Vector3 start, Vector3 end)
+    List<Vector3> GetLinePositions(Vector3 start, Vector3 end, Connection connection)
     {
         // all the z pos should be 1.
         // we want to get 1: start, 2: same level as start and midpoint with end, 3: same level as end and midpoint with start, 4: end
@@ -154,6 +155,13 @@ public class ConnectionPlacement : MonoBehaviour
             return new List<Vector3> { start, end };
         }
 
+        // create a seed composed of: {pos of source process in all process list}{pos of target process in all process list}{pos of source product in all products}{pos of target reactant in all reactants}
+        int sourceIndex = GetReactionIndex(connection.sourceProcess);
+        int targetIndex = GetReactionIndex(connection.targetProcess);
+        int seed = sourceIndex * 1000 + targetIndex * 100 + connection.sourceProductIndex * 10 + connection.targetReactantIndex;
+
+        System.Random rng = new System.Random(seed);
+
         float minX = Mathf.Min(start.x, end.x);
         float maxX = Mathf.Max(start.x, end.x);
 
@@ -161,12 +169,24 @@ public class ConnectionPlacement : MonoBehaviour
         minX = minX + 0.2f * xDistance;
         maxX = maxX - 0.2f * xDistance;
 
-        float x = Random.Range(minX, maxX);
+        float x = (float)(rng.NextDouble() * (maxX - minX) + minX);
 
         Vector3 pos1 = new Vector3(x, start.y, 1);
         Vector3 pos2 = new Vector3(x, end.y, 1);
 
         return new List<Vector3> { start, pos1, pos2, end };
+    }
+
+    int GetReactionIndex(Process process)
+    {
+        for (int i = 0; i < reactionsParent.transform.childCount; i++)
+        {
+            if (reactionsParent.transform.GetChild(i) == process.transform)
+            {
+                return i;
+            }
+        }
+        return -1;
     }
     
     Vector2 GetMouseWorldPosition()

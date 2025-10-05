@@ -273,6 +273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 902c30d8601002249a12f15357ab8ae8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  connectionPlacement: {fileID: 1234473833}
   colors: {fileID: 11400000, guid: 2184da6303888634bbf5961233a08644, type: 2}
 --- !u!4 &1813018073
 Transform:
@@ -333,6 +334,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1ba826644d881794d839ef56b9e76c53, type: 2}
   - {fileID: 11400000, guid: c91d53ce65832104fb25cb7cf668f993, type: 2}
   currentReaction: {fileID: 0}
+  moveOffset: {x: 0, y: 0}
 --- !u!4 &1971965871
 Transform:
   m_ObjectHideFlags: 0
