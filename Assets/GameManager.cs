@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public ColorCoding colors;
 
     public GraphController graphController;
+    public PlaceReaction placeReaction;
 
     void Awake()
     {
