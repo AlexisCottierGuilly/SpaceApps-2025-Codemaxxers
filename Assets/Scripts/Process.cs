@@ -98,6 +98,9 @@ public class Process : MonoBehaviour
         return wasteCost;
     }
 
+    public float GetActualEnthalpy() {
+        return reaction.deltaH * outputConnections[0].rate;
+    }
     // FrontEnd
     public void LoadReaction()
     {
