@@ -12,6 +12,7 @@ public enum Substance
     Carbon,
     Dioxygen,
     CarbonMonoxide,
+    Ethylene,
     Plastic
 }
 
