@@ -1,20 +1,29 @@
+using System.Collections.Generic;
 using UnityEngine;
 
+public enum ReactionType
+{
+    Normal,
+    Polymorphic,
+    Tablebased
+}
 
 [CreateAssetMenu(fileName = "Reaction", menuName = "Components/Reaction")]
 public class Reaction : ScriptableObject
 {
-    public Substance[] reactants;
-    public Substance[] products;
-    public float[] reactantCoefficients; // Stoichiometric coefficients for reactants
-    public float[] productCoefficients; // Stoichiometric coefficients for products
+    public List<Substance> reactants;
+    public List<Substance> products;
+    public List<float> reactantCoefficients; // Stoichiometric coefficients for reactants
+    public List<float> productCoefficients; // Stoichiometric coefficients for products
     public float deltaH; // Change in enthalpy (kJ/mol) (negative if exothermic, as per convention)
     public const float ROOM_TEMPERATURE_C = 25.0f;
     public float temperature = ROOM_TEMPERATURE_C; // Temperature at which the reaction occurs (°C)
 
+    public ReactionType reactionType;
+
     public float[] calculateOutputRates(float[] inputRates)
     {
-        if (inputRates.Length != reactants.Length)
+        if (inputRates.Length != reactants.Count)
         {
             Debug.LogError("Input rates length does not match number of reactants.");
             return null;
@@ -22,7 +31,7 @@ public class Reaction : ScriptableObject
 
         // Determine the limiting reactant
         float limitingRatio = float.MaxValue;
-        for (int i = 0; i < reactants.Length; i++)
+        for (int i = 0; i < reactants.Count; i++)
         {
             float ratio = inputRates[i] / reactantCoefficients[i];
             if (ratio < limitingRatio)
@@ -36,8 +45,8 @@ public class Reaction : ScriptableObject
         }
 
         // calculate the output rates based on the limiting reactant
-        float[] outputRates = new float[products.Length];
-        for (int i = 0; i < products.Length; i++)
+        float[] outputRates = new float[products.Count];
+        for (int i = 0; i < products.Count; i++)
         {
             outputRates[i] = limitingRatio * productCoefficients[i];
         }

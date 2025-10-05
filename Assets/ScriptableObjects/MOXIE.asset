@@ -19,5 +19,6 @@ MonoBehaviour:
   productCoefficients:
   - 2
   - 1
-  deltaH: 0
+  deltaH: 283
   temperature: 800
+  reactionType: 0

@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Mono.Cecil;
-using UnityEngine;
 
 public enum Substance
 {
@@ -13,6 +12,7 @@ public enum Substance
     Carbon,
     Dioxygen,
     CarbonMonoxide,
+    Plastic
 }
 
 public class Process : MonoBehaviour
@@ -41,7 +41,7 @@ public class Process : MonoBehaviour
     // BackEnd
     public void AssignRates()
     {
-        float[] inputRates = new float[reaction.reactants.Length];
+        float[] inputRates = new float[reaction.reactants.Count];
         // gather input rates from input connections
         for (int i = 0; i < inputConnections.Count; i++)
         {
@@ -59,7 +59,7 @@ public class Process : MonoBehaviour
     public float GetWasteCost()
     {
         float wasteCost = 0f;
-        for (int i = 0; i < reaction.reactants.Length; i++)
+        for (int i = 0; i < reaction.reactants.Count; i++)
         {
             wasteCost += (reaction.reactantCoefficients[i] - inputConnections[i].rate) * SubstanceCost[(int)reaction.reactants[i]];
         }

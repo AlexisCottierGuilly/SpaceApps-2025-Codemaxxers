@@ -274,6 +274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colors: {fileID: 11400000, guid: 2184da6303888634bbf5961233a08644, type: 2}
+  graphController: {fileID: 768019782}
 --- !u!4 &1813018073
 Transform:
   m_ObjectHideFlags: 0

@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEditor;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
     public ColorCoding colors;
+
+    public GraphController graphController;
 
     void Awake()
     {
