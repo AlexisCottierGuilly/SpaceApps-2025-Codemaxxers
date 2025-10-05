@@ -36,7 +36,7 @@ public class Process : MonoBehaviour
             inputConnections.Add(null);
         foreach (var product in reaction.products)
             outputConnections.Add(null);
-        
+
         LoadReaction();
     }
 
@@ -127,6 +127,41 @@ public class Process : MonoBehaviour
         {
             if (conn != null)
                 GameManager.instance.connectionPlacement.UpdateConnectionLine(conn.gameObject);
+        }
+    }
+
+    public ConnectionManager FindKnob(int index, ConnectionType type)
+    {
+        if (type == ConnectionType.Reactant)
+        {
+            foreach (Transform child in reactantsParent.transform)
+            {
+                ConnectionManager cm = child.GetComponent<ConnectionManager>();
+                if (cm.indexInProcess == index)
+                {
+                    return cm;
+                }
+            }
+        }
+        else if (type == ConnectionType.Product)
+        {
+            foreach (Transform child in productsParent.transform)
+            {
+                ConnectionManager cm = child.GetComponent<ConnectionManager>();
+                if (cm.indexInProcess == index)
+                {
+                    return cm;
+                }
+            }
+        }
+        return null;
+    }
+
+    public void UpdateKnobColor(ConnectionManager knob)
+    {
+        if (knob != null)
+        {
+            knob.GetComponent<Renderer>().material.color = GameManager.instance.colors.GetColor(knob.substance);
         }
     }
 }

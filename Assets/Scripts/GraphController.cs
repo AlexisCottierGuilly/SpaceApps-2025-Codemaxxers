@@ -65,25 +65,45 @@ public class GraphController : MonoBehaviour
                     for (int i = 0; i < conn.sourceProcess.reaction.reactants.Count; i++)
                     {
                         conn.sourceProcess.reaction.reactants[i] = targetSubstance;
+
+                        ConnectionManager knob = conn.sourceProcess.FindKnob(i, ConnectionType.Reactant);
+                        knob.substance = targetSubstance;
+                        conn.sourceProcess.UpdateKnobColor(knob);
                     }
                     for (int i = 0; i < conn.sourceProcess.reaction.products.Count; i++)
                     {
                         conn.sourceProcess.reaction.products[i] = targetSubstance;
+
+                        ConnectionManager knob = conn.sourceProcess.FindKnob(i, ConnectionType.Product);
+                        knob.substance = targetSubstance;
+                        conn.sourceProcess.UpdateKnobColor(knob);
                     }
+
+                    GameManager.instance.connectionPlacement.UpdateConnectionLine(conn.gameObject);
                 }
                 if (sourceSubstance != Substance.Any && targetSubstance == Substance.Any && conn.targetProcess.reaction.reactionType == ReactionType.Polymorphic)
-                {   
+                {
                     Debug.Log("Updating polymorphic target process");
                     done = false;
                     //set all other connections to the source substance
                     for (int i = 0; i < conn.targetProcess.reaction.reactants.Count; i++)
                     {
                         conn.targetProcess.reaction.reactants[i] = sourceSubstance;
+
+                        ConnectionManager knob = conn.targetProcess.FindKnob(i, ConnectionType.Reactant);
+                        knob.substance = sourceSubstance;
+                        conn.targetProcess.UpdateKnobColor(knob);
                     }
                     for (int i = 0; i < conn.targetProcess.reaction.products.Count; i++)
                     {
                         conn.targetProcess.reaction.products[i] = sourceSubstance;
+
+                        ConnectionManager knob = conn.targetProcess.FindKnob(i, ConnectionType.Product);
+                        knob.substance = sourceSubstance;
+                        conn.targetProcess.UpdateKnobColor(knob);
                     }
+
+                    GameManager.instance.connectionPlacement.UpdateConnectionLine(conn.gameObject);
                 }
             }
             if (done) break; // exit the loop if no more calculations can be done
