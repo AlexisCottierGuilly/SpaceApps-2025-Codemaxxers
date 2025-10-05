@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reaction: {fileID: 11400000, guid: b84b3eb5f9eb958498c2297997c70261, type: 2}
   hitbox: {fileID: 12074818865693373}
+  icon: {fileID: 6473725800371843089}
   inputConnections: []
   outputConnections: []
   connectionPrefab: {fileID: 8288776815282179442, guid: cbb60201b21fc544aa01ba0caa61aa45, type: 3}
@@ -196,7 +197,7 @@ GameObject:
   - component: {fileID: 8922114385816728709}
   - component: {fileID: 6473725800371843089}
   m_Layer: 0
-  m_Name: Contour
+  m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
