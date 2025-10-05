@@ -99,6 +99,15 @@ public class Process : MonoBehaviour
     }
 
     public float GetActualEnthalpy() {
+        float[] inputRates = new float[reaction.reactants.Count];
+        // gather input rates from input connections
+        for (int i = 0; i < inputConnections.Count; i++)
+        {
+            if (inputConnections[i] == null || inputConnections[i].rate == -1f) return 0f; // cannot calculate rates if any input connection is missing or not flowing
+            inputRates[i] = inputConnections[i].rate;
+        }
+        float[] outputRates = reaction.calculateOutputRates(inputRates);
+        if (outputConnections.Count == 0) return 0f;
         return reaction.deltaH * outputConnections[0].rate;
     }
     // FrontEnd
