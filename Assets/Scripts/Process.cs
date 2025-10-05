@@ -7,21 +7,21 @@ public enum Substance
     Any,
     Water,
     Methane,
-    CarbonDioxide,
+    Carbon_Dioxide,
     Dihydrogen,
     Carbon,
     Dioxygen,
-    CarbonMonoxide,
+    Carbon_Monoxide,
     Ethylene,
     Propene,
     Acetylene,
     Styrene,
     Benzene,
     Polyethylene,
-    PolyethyleneTerephthalate,
+    Polyethylene_Terephthalate,
     Polystyrene,
-    PolyvinylChloride,
-    Toxic
+    Polyvinyl_Chloride,
+    Hydrochloric_Acid,
 }
 
 public class Process : MonoBehaviour
