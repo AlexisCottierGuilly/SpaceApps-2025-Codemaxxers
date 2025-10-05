@@ -26,7 +26,7 @@ public class Process : MonoBehaviour
     public GameObject reactantsParent;
     public GameObject productsParent;
 
-    public List<float> SubstanceCost = new List<float>{0f, 1f, 2f, 1f, 1f, 1f};
+    public List<float> SubstanceCost = new List<float> { 0f, 1f, 2f, 1f, 1f, 1f };
 
     void Start()
     {
@@ -34,7 +34,7 @@ public class Process : MonoBehaviour
             inputConnections.Add(null);
         foreach (var product in reaction.products)
             outputConnections.Add(null);
-        
+
         LoadReaction();
     }
 

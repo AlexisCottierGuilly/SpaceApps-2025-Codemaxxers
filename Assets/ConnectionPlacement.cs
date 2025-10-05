@@ -100,7 +100,7 @@ public class ConnectionPlacement : MonoBehaviour
         end.isConnected = true;
 
         connection.SetActive(true);
-
+        
         UpdateConnectionLine(connection);
     }
 
@@ -109,8 +109,30 @@ public class ConnectionPlacement : MonoBehaviour
         // Only update line position
         LineRenderer lineRenderer = connection.GetComponent<LineRenderer>();
         Connection connectionClass = connection.GetComponent<Connection>();
-        ConnectionManager start = connectionClass.sourceProcess.outputConnections[connectionClass.sourceProductIndex].GetComponent<ConnectionManager>();
-        ConnectionManager end = connectionClass.targetProcess.inputConnections[connectionClass.targetReactantIndex].GetComponent<ConnectionManager>();
+
+        // Find start knob in source process children of index sourceProductIndex
+        ConnectionManager start = null;
+        foreach (Transform child in connectionClass.sourceProcess.productsParent.transform)
+        {
+            ConnectionManager cm = child.GetComponent<ConnectionManager>();
+            if (cm.indexInProcess == connectionClass.sourceProductIndex)
+            {
+                start = cm;
+                break;
+            }
+        }
+
+        // Find end knob in target process children of index targetReactantIndex
+        ConnectionManager end = null;
+        foreach (Transform child in connectionClass.targetProcess.reactantsParent.transform)
+        {
+            ConnectionManager cm = child.GetComponent<ConnectionManager>();
+            if (cm.indexInProcess == connectionClass.targetReactantIndex)
+            {
+                end = cm;
+                break;
+            }
+        }
 
         List<Vector3> positions = GetLinePositions(start.transform.position, end.transform.position);
         lineRenderer.positionCount = positions.Count;
@@ -136,8 +158,8 @@ public class ConnectionPlacement : MonoBehaviour
         float maxX = Mathf.Max(start.x, end.x);
 
         float xDistance = maxX - minX;
-        minX = minX + 0.25f * xDistance;
-        maxX = maxX - 0.25f * xDistance;
+        minX = minX + 0.2f * xDistance;
+        maxX = maxX - 0.2f * xDistance;
 
         float x = Random.Range(minX, maxX);
 
