@@ -10,6 +10,7 @@ public class ConnectionManager : MonoBehaviour
 {
     public Substance substance;
     public ConnectionType connectionType;
+    public float coefficient = 1f;
     public CircleCollider2D hitbox;
     public bool isConnected = false;
 

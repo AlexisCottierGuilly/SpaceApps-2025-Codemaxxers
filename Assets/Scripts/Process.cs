@@ -85,6 +85,7 @@ public class Process : MonoBehaviour
             ConnectionManager connectionManager = newConnection.GetComponent<ConnectionManager>();
             connectionManager.parentProcess = this;
             connectionManager.indexInProcess = index;
+            connectionManager.coefficient = reaction.reactantCoefficients[index];
 
             newConnection.name = reactant.ToString();
             connectionManager.substance = reactant;
@@ -106,6 +107,7 @@ public class Process : MonoBehaviour
             ConnectionManager connectionManager = newConnection.GetComponent<ConnectionManager>();
             connectionManager.parentProcess = this;
             connectionManager.indexInProcess = index;
+            connectionManager.coefficient = reaction.productCoefficients[index];
 
             newConnection.name = product.ToString();
             connectionManager.substance = product;

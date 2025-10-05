@@ -5,6 +5,7 @@ public class PlaceReaction : MonoBehaviour
 {
     public GameObject reactionPrefab;
     public GameObject reactionsParent;
+    public GameObject canvasParent;
 
     public List<Reaction> reactions;
 
@@ -16,6 +17,7 @@ public class PlaceReaction : MonoBehaviour
         GameObject reactionObject = Instantiate(reactionPrefab, Vector3.zero, Quaternion.identity);
         reactionObject.GetComponent<Process>().reaction = GameManager.instance.CloneScriptableObject(reaction);
         reactionObject.name = reaction.name;
+        reactionObject.transform.SetParent(canvasParent.transform);
         Sprite reactionSprite = Sprite.Create(reaction.icon, new Rect(0.0f, 0.0f, reaction.icon.width, reaction.icon.height), new Vector2(0.5f, 0.5f), 100.0f);
         reactionObject.GetComponent<Process>().icon.sprite = reactionSprite;
         reactionObject.SetActive(true);

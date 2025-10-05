@@ -150,8 +150,9 @@ public class ConnectionPlacement : MonoBehaviour
         // we want to get 1: start, 2: same level as start and midpoint with end, 3: same level as end and midpoint with start, 4: end
 
         float diffY = Mathf.Abs(start.y - end.y);
+        float diffX = Mathf.Abs(start.x - end.x);
 
-        if (diffY < 0.75f)
+        if (diffY < 0.75f || diffX < 1.25f)
         {
             return new List<Vector3> { start, end };
         }
