@@ -149,7 +149,7 @@ public class Process : MonoBehaviour
             index++;
         }
         productsParent.GetComponent<ArrangeVerticalLayout>().UpdateLayout();
-        
+
         if (showDeltaH)
         {
             enthalpyText.gameObject.SetActive(true);
@@ -159,10 +159,24 @@ public class Process : MonoBehaviour
             enthalpyText.gameObject.SetActive(false);
         }
 
-        if (reaction.deltaH >= 0)
-            enthalpyText.text = "+" + reaction.deltaH.ToString("F1") + " kJ/mol";
+
+        float actualEnthalpy = GetActualEnthalpy();
+        if (actualEnthalpy != 0)
+        {
+            enthalpyText.color = Color.white;
+            if (actualEnthalpy >= 0)
+                enthalpyText.text = "+" + actualEnthalpy.ToString("F1") + " kJ/mol";
+            else
+                enthalpyText.text = actualEnthalpy.ToString("F1") + " kJ/mol";
+        }
         else
-            enthalpyText.text = reaction.deltaH.ToString("F1") + " kJ/mol";
+        {
+            enthalpyText.color = Color.gray;
+            if (reaction.deltaH >= 0)
+                enthalpyText.text = "+" + reaction.deltaH.ToString("F1") + " kJ/mol";
+            else
+                enthalpyText.text = reaction.deltaH.ToString("F1") + " kJ/mol";
+        }
     }
 
     public void UpdateConnections()
