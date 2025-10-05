@@ -158,7 +158,11 @@ public class ConnectionPlacement : MonoBehaviour
         GameManager.instance.graphController.connections.Add(connectionClass);
         GameManager.instance.graphController.updateConnections();
         GameManager.instance.graphController.CalculateRates();
-        totalDeltaHText.text = "ΔH: " + GameManager.instance.graphController.GetTotalDeltaH().ToString("0.##") + " kJ";
+        float deltaH = GameManager.instance.graphController.GetTotalDeltaH();
+        if (deltaH >= 0)
+            totalDeltaHText.text = "ΔH: +" + deltaH.ToString("0.##") + " kJ";
+        else
+            totalDeltaHText.text = "ΔH: " + deltaH.ToString("0.##") + " kJ";
         UpdateConnectionLine(connection);
     }
 

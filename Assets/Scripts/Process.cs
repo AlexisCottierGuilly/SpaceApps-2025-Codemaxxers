@@ -166,25 +166,6 @@ public class Process : MonoBehaviour
         {
             enthalpyText.gameObject.SetActive(false);
         }
-
-
-        float actualEnthalpy = GetActualEnthalpy();
-        if (actualEnthalpy != 0)
-        {
-            enthalpyText.color = Color.white;
-            if (actualEnthalpy >= 0)
-                enthalpyText.text = "+" + actualEnthalpy.ToString("F1") + " kJ/mol";
-            else
-                enthalpyText.text = actualEnthalpy.ToString("F1") + " kJ/mol";
-        }
-        else
-        {
-            enthalpyText.color = Color.gray;
-            if (reaction.deltaH >= 0)
-                enthalpyText.text = "+" + reaction.deltaH.ToString("F1") + " kJ/mol";
-            else
-                enthalpyText.text = reaction.deltaH.ToString("F1") + " kJ/mol";
-        }
     }
 
     public void UpdateConnections()

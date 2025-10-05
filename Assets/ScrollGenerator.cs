@@ -54,6 +54,9 @@ public class ScrollGenerator : MonoBehaviour
         reactionGO.transform.SetParent(newButton.transform, false);
         reactionGO.transform.localScale *= 30f;
 
+        Sprite reactionSprite = Sprite.Create(reaction.icon, new Rect(0.0f, 0.0f, reaction.icon.width, reaction.icon.height), new Vector2(0.5f, 0.5f), 100.0f);
+        reactionGO.GetComponent<Process>().icon.sprite = reactionSprite;
+
         reactionGO.transform.SetAsFirstSibling();
 
         // loop in ann the reaction's reactantsParent childs and productsParent childs and make them in front of the UI
