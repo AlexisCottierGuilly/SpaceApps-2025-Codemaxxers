@@ -15,7 +15,7 @@ public class ConnectionPlacement : MonoBehaviour
 
     [HideInInspector] public ConnectionManager selectedConnectionKnob;
 
-    ConnectionManager GetPressedConnectionKnob()
+    ConnectionManager GetPressedConnectionKnob(bool skipConnected = true)
     {
         Vector2 mousePos = GetMouseWorldPosition();
         foreach (Transform reaction in reactionsParent.transform)
@@ -24,7 +24,7 @@ public class ConnectionPlacement : MonoBehaviour
             foreach (Transform reactant in process.reactantsParent.transform)
             {
                 ConnectionManager connectionManager = reactant.GetComponent<ConnectionManager>();
-                if (!connectionManager.isConnected && MouseOverConnectionKnob(reactant.gameObject, mousePos))
+                if ((!connectionManager.isConnected || !skipConnected) && MouseOverConnectionKnob(reactant.gameObject, mousePos))
                 {
                     return connectionManager;
                 }
@@ -32,7 +32,7 @@ public class ConnectionPlacement : MonoBehaviour
             foreach (Transform product in process.productsParent.transform)
             {
                 ConnectionManager connectionManager = product.GetComponent<ConnectionManager>();
-                if (!connectionManager.isConnected && MouseOverConnectionKnob(product.gameObject, mousePos))
+                if ((!connectionManager.isConnected || !skipConnected) && MouseOverConnectionKnob(product.gameObject, mousePos))
                 {
                     return connectionManager;
                 }
@@ -54,34 +54,80 @@ public class ConnectionPlacement : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+
+        bool leftClick = Input.GetMouseButtonDown(0);
+        bool rightClick = Input.GetMouseButtonDown(1);
+        
+        if (leftClick || rightClick)
         {
-            ConnectionManager clickedObject = GetPressedConnectionKnob();
-
-            Debug.Log("Clicked on: " + (clickedObject != null ? clickedObject.substance.ToString() : "Nothing"));
-            if (clickedObject != null)
+            if (leftClick)
             {
-                clickedObject.GetComponent<Animator>().SetTrigger("Click");
+                ConnectionManager clickedObject = GetPressedConnectionKnob(true);
 
-                if (selectedConnectionKnob == null)
+                Debug.Log("Clicked on: " + (clickedObject != null ? clickedObject.substance.ToString() : "Nothing"));
+                if (clickedObject != null)
                 {
-                    selectedConnectionKnob = clickedObject;
+                    clickedObject.GetComponent<Animator>().SetTrigger("Click");
+
+                    if (selectedConnectionKnob == null)
+                    {
+                        selectedConnectionKnob = clickedObject;
+                    }
+                    else
+                    {
+                        if (selectedConnectionKnob != clickedObject &&
+                        selectedConnectionKnob.connectionType != clickedObject.connectionType &&
+                        (selectedConnectionKnob.substance == clickedObject.substance
+                        || selectedConnectionKnob.substance == Substance.Any || clickedObject.substance == Substance.Any))
+                        {
+                            Debug.Log("Connected " + selectedConnectionKnob.substance + " to " + clickedObject.substance);
+                            CreateConnectionLine(selectedConnectionKnob, clickedObject);
+                            selectedConnectionKnob = null;
+                        }
+                    }
                 }
                 else
                 {
-                    if (selectedConnectionKnob != clickedObject &&
-                    selectedConnectionKnob.connectionType != clickedObject.connectionType &&
-                    (selectedConnectionKnob.substance == clickedObject.substance
-                    || selectedConnectionKnob.substance == Substance.Any || clickedObject.substance == Substance.Any))
-                    {
-                        Debug.Log("Connected " + selectedConnectionKnob.substance + " to " + clickedObject.substance);
-                        CreateConnectionLine(selectedConnectionKnob, clickedObject);
-                        selectedConnectionKnob = null;
-                    }
+                    selectedConnectionKnob = null;
                 }
             }
-            else
+            else if (rightClick)
             {
+                ConnectionManager clickedObject = GetPressedConnectionKnob(false);
+                Debug.Log("Right clicked on: " + (clickedObject != null ? clickedObject.substance.ToString() : "Nothing"));
+                if (clickedObject != null && clickedObject.isConnected)
+                {
+                    Debug.Log("Clicked on connected: " + clickedObject.substance.ToString());
+                    Connection connection = null;
+                    if (clickedObject.connectionType == ConnectionType.Reactant)
+                    {
+                        connection = clickedObject.parentProcess.inputConnections[clickedObject.indexInProcess];
+                    }
+                    else
+                    {
+                        connection = clickedObject.parentProcess.outputConnections[clickedObject.indexInProcess];
+                    }
+
+                    if (connection != null)
+                    {
+                        // set the source productParent child isConnected to false and the target reactantParent child isConnected to false
+                        connection.sourceProcess.GetComponent<Process>().FindKnob(connection.sourceProductIndex, ConnectionType.Product).isConnected = false;
+                        connection.targetProcess.GetComponent<Process>().FindKnob(connection.targetReactantIndex, ConnectionType.Reactant).isConnected = false;
+
+                        Debug.Log("Disconnected " + connection.sourceProcess.reaction.name + " from " + connection.targetProcess.reaction.name);
+                        connection.sourceProcess.outputConnections[connection.sourceProductIndex] = null;
+                        connection.targetProcess.inputConnections[connection.targetReactantIndex] = null;
+
+                        connection.sourceProcess.GetComponent<Process>().UpdateConnections();
+                        connection.targetProcess.GetComponent<Process>().UpdateConnections();
+
+                        GameManager.instance.graphController.connections.Remove(connection);
+                        GameManager.instance.graphController.updateConnections();
+                        GameManager.instance.graphController.CalculateRates();
+                        Debug.Log("Enthalpy: " + GameManager.instance.graphController.GetTotalDeltaH());
+                        Destroy(connection.gameObject);
+                    }
+                }
                 selectedConnectionKnob = null;
             }
         }
