@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a78a0e8be21bd44da579c9f14392a06, type: 3}
   m_Name: Split
   m_EditorClassIdentifier: 
-  icon: {fileID: 2800000, guid: fcac9d08c1ad6c54086aecbeb8486e49, type: 3}
+  icon: {fileID: 2800000, guid: a58ad1fe7bcbe2f4992edf2b74b7b92e, type: 3}
   reactants: 00000000
   products: 0000000000000000
   reactantCoefficients:
@@ -21,5 +21,3 @@ MonoBehaviour:
   - 1
   - 1
   deltaH: 0
-  temperature: 25
-  reactionType: 1

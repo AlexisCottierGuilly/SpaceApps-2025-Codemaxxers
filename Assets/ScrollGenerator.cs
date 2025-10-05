@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 public class ScrollGenerator : MonoBehaviour
 {
-    public bool custom = false;
+    public int customIndex = -1;
 
-    public List<Reaction> customReactions;
+    public List<ReactionList> customListsOfReactions;
 
     public GameObject buttonPrefab;
     public GameObject reactionPrefab;
@@ -17,6 +17,22 @@ public class ScrollGenerator : MonoBehaviour
     void Start()
     {
         loadScroll();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SetCustomIndex(-1);
+        }
+        for (int i = 0; i <= 9; i++)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha0 + i))
+            {
+                SetCustomIndex(i - 1);
+            }
+        }
+
     }
 
     void loadScroll()
@@ -33,6 +49,14 @@ public class ScrollGenerator : MonoBehaviour
                 DidClickButton(reaction);
             });
         }
+    }
+
+    void SetCustomIndex(int index)
+    {
+        customIndex = index;
+        if (customIndex >= customListsOfReactions.Count)
+            customIndex = -1;
+        loadScroll();
     }
 
     void DidClickButton(Reaction reaction)
@@ -83,8 +107,15 @@ public class ScrollGenerator : MonoBehaviour
 
     List<Reaction> GetScrollReactions()
     {
-        if (custom)
-            return customReactions;
+        if (customIndex >= 0 && customIndex < customListsOfReactions.Count)
+                return customListsOfReactions[customIndex].reactions;
         return GameManager.instance.placeReaction.reactions;
     }
+}
+
+
+[System.Serializable]
+public class ReactionList
+{
+    public List<Reaction> reactions;
 }

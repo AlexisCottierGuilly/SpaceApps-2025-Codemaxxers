@@ -9,6 +9,8 @@ public class PlaceReaction : MonoBehaviour
 
     public List<Reaction> reactions;
 
+    public RectTransform scrollPanel;
+
     [HideInInspector] public GameObject currentReaction;
     [HideInInspector] public Vector2 moveOffset;
 
@@ -67,6 +69,16 @@ public class PlaceReaction : MonoBehaviour
                     Vector2 worldPos = GetMouseWorldPosition();
                     worldPos += moveOffset;
                     Place(currentReaction, worldPos);
+
+                    if (Input.mousePosition.x < Screen.width / 5)
+                    {
+                        if (!currentReaction.GetComponent<Process>().HasConnections())
+                        {
+                            GameManager.instance.graphController.processes.Remove(currentReaction.GetComponent<Process>());
+                            Destroy(currentReaction);
+                        }
+                    }
+
                     currentReaction = null;
                 }
             }

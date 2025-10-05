@@ -17,12 +17,14 @@ public class ContentHeightUpdater : MonoBehaviour
     void UpdateHeight()
     {
         float totalHeight = spacing;
+        int nb = 0;
         foreach (RectTransform child in transform)
         {
-            totalHeight += child.rect.height + spacing;
+            totalHeight += child.rect.height + spacing + 15f;
+            nb++;
         }
 
-        totalHeight += 500f;
+        totalHeight += 125f;
 
         RectTransform rectTransform = GetComponent<RectTransform>();
         rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, totalHeight);

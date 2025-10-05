@@ -182,6 +182,19 @@ public class Process : MonoBehaviour
         }
     }
 
+    public bool HasConnections()
+    {
+        foreach (var conn in inputConnections)
+        {
+            if (conn != null) return true;
+        }
+        foreach (var conn in outputConnections)
+        {
+            if (conn != null) return true;
+        }
+        return false;
+    }
+
     public ConnectionManager FindKnob(int index, ConnectionType type)
     {
         if (type == ConnectionType.Reactant)

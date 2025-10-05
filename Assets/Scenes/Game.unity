@@ -642,8 +642,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee0610a2bc955c04e90abbe41d66cc4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  custom: 0
-  customReactions: []
+  customIndex: -1
+  customListsOfReactions:
+  - reactions:
+    - {fileID: 11400000, guid: 5322283b3d8a8464c8bd827a7f79effa, type: 2}
+    - {fileID: 11400000, guid: 90e931cfbec1b88469c0af8e15e4c72d, type: 2}
+    - {fileID: 11400000, guid: 3e5f9733eb9c45f4196cc0f17cf9ca70, type: 2}
+  - reactions:
+    - {fileID: 11400000, guid: 5322283b3d8a8464c8bd827a7f79effa, type: 2}
+    - {fileID: 11400000, guid: f1f7e9228a0bfe24a9df93f4ac6d2ff0, type: 2}
+    - {fileID: 11400000, guid: aa1500d1d6182c441ba2c7d3a60c9186, type: 2}
+    - {fileID: 11400000, guid: c91d53ce65832104fb25cb7cf668f993, type: 2}
   buttonPrefab: {fileID: 1819368861}
   reactionPrefab: {fileID: 157172216984374263, guid: a7a8a7bd02b41ad4398abf43985a96df, type: 3}
   scrollRect: {fileID: 1011392287}
@@ -2508,6 +2517,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: aa1500d1d6182c441ba2c7d3a60c9186, type: 2}
   - {fileID: 11400000, guid: 6e1da8ff822165145b77a4ec30cfbb10, type: 2}
   - {fileID: 11400000, guid: 3bd89d54d3188fc498d97a1985c2f281, type: 2}
+  scrollPanel: {fileID: 1011392286}
   currentReaction: {fileID: 0}
   moveOffset: {x: 0, y: 0}
   skipNextKeyUp: 0
