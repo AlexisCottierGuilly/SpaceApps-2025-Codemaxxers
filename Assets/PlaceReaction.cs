@@ -12,6 +12,8 @@ public class PlaceReaction : MonoBehaviour
     [HideInInspector] public GameObject currentReaction;
     [HideInInspector] public Vector2 moveOffset;
 
+    [HideInInspector] public bool skipNextKeyUp = false;
+
     public GameObject Create(Reaction reaction)
     {
         GameObject reactionObject = Instantiate(reactionPrefab, Vector3.zero, Quaternion.identity);
@@ -55,10 +57,18 @@ public class PlaceReaction : MonoBehaviour
         {
             if (Input.GetMouseButtonUp(0))
             {
-                Vector2 worldPos = GetMouseWorldPosition();
-                worldPos += moveOffset;
-                Place(currentReaction, worldPos);
-                currentReaction = null;
+                if (skipNextKeyUp)
+                {
+                    skipNextKeyUp = false;
+                    return;
+                }
+                else
+                {
+                    Vector2 worldPos = GetMouseWorldPosition();
+                    worldPos += moveOffset;
+                    Place(currentReaction, worldPos);
+                    currentReaction = null;
+                }
             }
 
             else

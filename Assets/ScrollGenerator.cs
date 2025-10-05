@@ -38,6 +38,8 @@ public class ScrollGenerator : MonoBehaviour
     void DidClickButton(Reaction reaction)
     {
         Debug.Log("Clicked on reaction: " + reaction.name);
+        GameManager.instance.placeReaction.currentReaction = GameManager.instance.placeReaction.Create(reaction);
+        GameManager.instance.placeReaction.skipNextKeyUp = true;
     }
 
     GameObject CreateReactionButton(Reaction reaction)
@@ -47,11 +49,22 @@ public class ScrollGenerator : MonoBehaviour
 
         GameObject reactionGO = Instantiate(reactionPrefab);
         reactionGO.SetActive(true);
+        reactionGO.GetComponent<Process>().reaction = GameManager.instance.CloneScriptableObject(reaction);
         reactionGO.transform.SetParent(newButton.transform, false);
-        reactionGO.transform.localScale *= 20f;
+        reactionGO.transform.localScale *= 30f;
 
-        reactionGO.GetComponent<Process>().icon.sortingLayerName = "UI";
-        reactionGO.GetComponent<Process>().icon.sortingOrder = 9999;
+        reactionGO.transform.SetAsFirstSibling();
+
+        // loop in ann the reaction's reactantsParent childs and productsParent childs and make them in front of the UI
+        Process process = reactionGO.GetComponent<Process>();
+        foreach (Transform child in process.reactantsParent.transform)
+        {
+            child.GetComponent<SpriteRenderer>().sortingOrder = 9999;
+        }
+        foreach (Transform child in process.productsParent.transform)
+        {
+            child.GetComponent<SpriteRenderer>().sortingOrder = 9999;
+        }
 
         return newButton;
     }
