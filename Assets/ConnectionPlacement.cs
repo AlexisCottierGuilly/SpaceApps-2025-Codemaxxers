@@ -99,10 +99,11 @@ public class ConnectionPlacement : MonoBehaviour
 
         start.isConnected = true;
         end.isConnected = true;
-
         connection.SetActive(true);
         
         UpdateConnectionLine(connection);
+        GameManager.instance.graphController.connections.Add(connectionClass);
+        GameManager.instance.graphController.updateConnections(); 
     }
 
     public void UpdateConnectionLine(GameObject connection)

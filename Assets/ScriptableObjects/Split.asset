@@ -21,3 +21,4 @@ MonoBehaviour:
   - 1
   deltaH: 0
   temperature: 25
+  reactionType: 1

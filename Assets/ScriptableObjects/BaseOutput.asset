@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: BaseOutput
   m_EditorClassIdentifier: 
   reactants: 
-  products: 00000000
+  products: 08000000
   reactantCoefficients: []
   productCoefficients:
   - 1
   deltaH: 0
   temperature: 0
+  reactionType: 0

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEditor;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class GameManager : MonoBehaviour
     public ConnectionPlacement connectionPlacement;
 
     public ColorCoding colors;
+
+    public GraphController graphController;
 
     void Awake()
     {
