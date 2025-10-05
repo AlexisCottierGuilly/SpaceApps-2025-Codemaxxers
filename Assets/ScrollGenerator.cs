@@ -50,6 +50,7 @@ public class ScrollGenerator : MonoBehaviour
         GameObject reactionGO = Instantiate(reactionPrefab);
         reactionGO.SetActive(true);
         reactionGO.GetComponent<Process>().reaction = GameManager.instance.CloneScriptableObject(reaction);
+        reactionGO.GetComponent<Process>().showDeltaH = false;
         reactionGO.transform.SetParent(newButton.transform, false);
         reactionGO.transform.localScale *= 30f;
 

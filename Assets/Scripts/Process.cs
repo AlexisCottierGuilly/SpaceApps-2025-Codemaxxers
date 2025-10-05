@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Mono.Cecil;
+using TMPro;
 
 public enum Substance
 {
@@ -37,6 +38,9 @@ public class Process : MonoBehaviour
     public GameObject connectionPrefab;
     public GameObject reactantsParent;
     public GameObject productsParent;
+
+    public TextMeshProUGUI enthalpyText;
+    public bool showDeltaH = true;
 
     public List<float> SubstanceCost = new List<float> { 0f, 1f, 2f, 1f, 1f, 1f };
 
@@ -142,6 +146,20 @@ public class Process : MonoBehaviour
             index++;
         }
         productsParent.GetComponent<ArrangeVerticalLayout>().UpdateLayout();
+        
+        if (showDeltaH)
+        {
+            enthalpyText.gameObject.SetActive(true);
+        }
+        else
+        {
+            enthalpyText.gameObject.SetActive(false);
+        }
+
+        if (reaction.deltaH >= 0)
+            enthalpyText.text = "+" + reaction.deltaH.ToString("F1") + " kJ/mol";
+        else
+            enthalpyText.text = reaction.deltaH.ToString("F1") + " kJ/mol";
     }
 
     public void UpdateConnections()

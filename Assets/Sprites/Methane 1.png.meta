@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 867444c0d24b6b44f9e31aee0b9871de
+guid: cc515070418a4554e8cc985abe1dc541
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8743037230551656471
-    second: Methane_0
+      213: 1066243748027342931
+    second: Methane 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Methane_0
+      name: Methane 1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9e714fe16fd7aa680800000000000000
-      internalID: -8743037230551656471
+      spriteID: 350a6252a0f0cce00800000000000000
+      internalID: 1066243748027342931
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Methane_0: -8743037230551656471
+      Methane 1_0: 1066243748027342931
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
