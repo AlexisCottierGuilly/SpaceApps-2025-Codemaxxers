@@ -107,8 +107,7 @@ public class Process : MonoBehaviour
             inputRates[i] = inputConnections[i].rate;
         }
         float[] outputRates = reaction.calculateOutputRates(inputRates);
-        if (outputConnections.Count == 0) return 0f;
-        return reaction.deltaH * outputConnections[0].rate;
+        return reaction.deltaH * outputRates[0];
     }
     // FrontEnd
     public void LoadReaction()
