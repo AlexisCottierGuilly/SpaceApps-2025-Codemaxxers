@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 10, y: 5}
+  m_SizeDelta: {x: 30, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5897740377781715817
 CanvasRenderer:
@@ -298,7 +298,6 @@ MonoBehaviour:
   targetProcess: {fileID: 0}
   targetReactantIndex: 0
   rate: -1
-  calculated: 0
 --- !u!1 &9200843274699877921
 GameObject:
   m_ObjectHideFlags: 0
