@@ -139,10 +139,22 @@ public class GraphController : MonoBehaviour
         float totalDeltaH = 0f;
         foreach (var process in processes)
         {
-            if (process.reaction != null && process.outputConnections[0] != null)
+            float[] inputRates = new float[process.inputConnections.Count];
+            bool invalid = false;
+            for (int i = 0; i < process.inputConnections.Count; i++)
             {
-                totalDeltaH += process.reaction.deltaH * process.outputConnections[0].rate;
+                if (process.inputConnections[i] != null && process.inputConnections[i].rate >= 0)
+                    inputRates[i] = process.inputConnections[i].rate;
+                else
+                {
+                    invalid = true;
+                    break;
+                }
+
             }
+            if (invalid) continue; // skip if any input rates are invalid
+            float[] outputRates = process.reaction.calculateOutputRates(inputRates);
+            totalDeltaH += process.reaction.deltaH * (outputRates.Length > 0 ? outputRates[0] : 0f);
         }
         return totalDeltaH;
     }
