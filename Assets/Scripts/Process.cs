@@ -21,6 +21,7 @@ public class Process : MonoBehaviour
     public Reaction reaction; //the reaction this process performs
 
     public BoxCollider2D hitbox;
+    public SpriteRenderer icon;
 
     public List<Connection> inputConnections; //list of connections that provide input to this process
     public List<Connection> outputConnections; //list of connections that take output from this process

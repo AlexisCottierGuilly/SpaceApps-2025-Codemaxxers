@@ -11,6 +11,7 @@ public enum ReactionType
 [CreateAssetMenu(fileName = "Reaction", menuName = "Components/Reaction")]
 public class Reaction : ScriptableObject
 {
+    public Texture2D icon;
     public List<Substance> reactants;
     public List<Substance> products;
     public List<float> reactantCoefficients; // Stoichiometric coefficients for reactants
