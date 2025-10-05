@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 18ef1a6ac948bed468429d0b03545247
+guid: c5815003a6837b54198efe49b6d82862
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1289216661469539021
-    second: Electrolysis_0
+      213: 3085524658024817237
+    second: electro_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Electrolysis_0
+      name: electro_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: dca286919b734e110800000000000000
-      internalID: 1289216661469539021
+      spriteID: 5522743245cf1da20800000000000000
+      internalID: 3085524658024817237
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Electrolysis_0: 1289216661469539021
+      electro_0: 3085524658024817237
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
