@@ -11,6 +11,8 @@ public class ConnectionPlacement : MonoBehaviour
 
     public GameObject connectionsParent;
 
+    public TMPro.TextMeshProUGUI totalDeltaHText;
+
     [HideInInspector] public ConnectionManager selectedConnectionKnob;
 
     ConnectionManager GetPressedConnectionKnob()
@@ -43,6 +45,11 @@ public class ConnectionPlacement : MonoBehaviour
     {
         CircleCollider2D hitbox = connectionKnob.GetComponent<ConnectionManager>().hitbox;
         return hitbox.OverlapPoint(mousePos);
+    }
+
+    void Start() { 
+        selectedConnectionKnob = null;
+        totalDeltaHText.text = "ΔH: 0 kJ";
     }
 
     void Update()
@@ -105,7 +112,7 @@ public class ConnectionPlacement : MonoBehaviour
         GameManager.instance.graphController.connections.Add(connectionClass);
         GameManager.instance.graphController.updateConnections();
         GameManager.instance.graphController.CalculateRates();
-        Debug.Log("Enthalpy: " + GameManager.instance.graphController.GetTotalDeltaH());
+        totalDeltaHText.text = "ΔH: " + GameManager.instance.graphController.GetTotalDeltaH().ToString("0.##") + " kJ";
         UpdateConnectionLine(connection);
     }
 
