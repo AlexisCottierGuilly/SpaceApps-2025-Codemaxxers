@@ -70,7 +70,7 @@ public class PlaceReaction : MonoBehaviour
                     worldPos += moveOffset;
                     Place(currentReaction, worldPos);
 
-                    if (Input.mousePosition.x < Screen.width / 5)
+                    if (Input.mousePosition.x < Screen.width / 7)
                     {
                         if (!currentReaction.GetComponent<Process>().HasConnections())
                         {
