@@ -14,8 +14,6 @@ public class PlaceReaction : MonoBehaviour
     {
         GameObject reactionObject = Instantiate(reactionPrefab, Vector3.zero, Quaternion.identity);
         reactionObject.GetComponent<Process>().reaction = GameManager.instance.CloneScriptableObject(reaction);
-        reactionObject.GetComponent<Process>().reaction.deltaH = -1000f;
-        Debug.Log(reactionObject.GetComponent<Process>().reaction.deltaH);
         reactionObject.name = reaction.name;
         reactionObject.SetActive(true);
         return reactionObject;
