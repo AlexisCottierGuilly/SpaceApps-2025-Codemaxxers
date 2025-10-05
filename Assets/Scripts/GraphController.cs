@@ -60,33 +60,35 @@ public class GraphController : MonoBehaviour
                 if (sourceSubstance == Substance.Any && targetSubstance != Substance.Any && conn.sourceProcess.reaction.reactionType == ReactionType.Polymorphic)
                 {
                     Debug.Log("Updating polymorphic source process");
-                    done = false;
-                    //set all other connections from the source process to target substance
-                    for (int i = 0; i < conn.sourceProcess.reaction.reactants.Count; i++)
+                    if (sourceSubstance == Substance.Any && targetSubstance != Substance.Any && conn.sourceProcess.reaction.reactionType == ReactionType.Polymorphic)
                     {
-                        conn.sourceProcess.reaction.reactants[i] = targetSubstance;
+                        done = false;
+                        //set all other connections from the source process to target substance
+                        for (int i = 0; i < conn.sourceProcess.reaction.reactants.Count; i++)
+                        {
+                            conn.sourceProcess.reaction.reactants[i] = targetSubstance;
+                        }
+                        for (int i = 0; i < conn.sourceProcess.reaction.products.Count; i++)
+                        {
+                            conn.sourceProcess.reaction.products[i] = targetSubstance;
+                        }
                     }
-                    for (int i = 0; i < conn.sourceProcess.reaction.products.Count; i++)
+                    if (sourceSubstance != Substance.Any && targetSubstance == Substance.Any && conn.targetProcess.reaction.reactionType == ReactionType.Polymorphic)
                     {
-                        conn.sourceProcess.reaction.products[i] = targetSubstance;
+                        done = false;
+                        //set all other connections to the source substance
+                        for (int i = 0; i < conn.targetProcess.reaction.reactants.Count; i++)
+                        {
+                            conn.targetProcess.reaction.reactants[i] = sourceSubstance;
+                        }
+                        for (int i = 0; i < conn.targetProcess.reaction.products.Count; i++)
+                        {
+                            conn.targetProcess.reaction.products[i] = sourceSubstance;
+                        }
                     }
                 }
-                if (sourceSubstance != Substance.Any && targetSubstance == Substance.Any && conn.targetProcess.reaction.reactionType == ReactionType.Polymorphic)
-                {
-                    Debug.Log("Updating polymorphic target process");
-                    done = false;
-                    //set all other connections to the source substance
-                    for (int i = 0; i < conn.targetProcess.reaction.reactants.Count; i++)
-                    {
-                        conn.targetProcess.reaction.reactants[i] = sourceSubstance;
-                    }
-                    for (int i = 0; i < conn.targetProcess.reaction.products.Count; i++)
-                    {
-                        conn.targetProcess.reaction.products[i] = sourceSubstance;
-                    }
-                }
+                if (done) break; // exit the loop if no more calculations can be done
             }
-            if (done) break; // exit the loop if no more calculations can be done
         }
     }
 

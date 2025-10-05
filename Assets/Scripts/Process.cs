@@ -34,7 +34,7 @@ public class Process : MonoBehaviour
             inputConnections.Add(null);
         foreach (var product in reaction.products)
             outputConnections.Add(null);
-
+        
         LoadReaction();
     }
 
