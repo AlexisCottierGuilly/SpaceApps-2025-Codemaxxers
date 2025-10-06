@@ -93,7 +93,8 @@ public class Process : MonoBehaviour
         float wasteCost = 0f;
         for (int i = 0; i < reaction.reactants.Count; i++)
         {
-            wasteCost += (reaction.reactantCoefficients[i] - inputConnections[i].rate);
+            if (inputConnections[i] == null || inputConnections[i].rate == -1f) return 0f; // cannot calculate rates if any input connection is missing or not flowing
+            wasteCost +=(reaction.reactantCoefficients[i] - inputConnections[i].rate);
         }
         return wasteCost;
     }

@@ -159,7 +159,7 @@ public class GraphController : MonoBehaviour
         return totalDeltaH;
     }
 
-    public float GetTotalWasteCost()
+    public float GetTotalWaste()
     {
         float totalWasteCost = 0f;
         foreach (var process in processes)

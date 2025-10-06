@@ -12,6 +12,7 @@ public class ConnectionPlacement : MonoBehaviour
     public GameObject connectionsParent;
 
     public TMPro.TextMeshProUGUI totalDeltaHText;
+    public TMPro.TextMeshProUGUI totalWasteText;
 
     [HideInInspector] public ConnectionManager selectedConnectionKnob;
 
@@ -129,6 +130,9 @@ public class ConnectionPlacement : MonoBehaviour
                             totalDeltaHText.text = "ΔH: +" + deltaH.ToString("0.##") + " kJ";
                         else
                             totalDeltaHText.text = "ΔH: " + deltaH.ToString("0.##") + " kJ";
+                        
+                        float totalWaste = GameManager.instance.graphController.GetTotalWaste();
+                        totalWasteText.text = "Waste: " + totalWaste.ToString("0.##");
                         Destroy(connection.gameObject);
                     }
                 }
@@ -167,6 +171,8 @@ public class ConnectionPlacement : MonoBehaviour
             totalDeltaHText.text = "ΔH: +" + deltaH.ToString("0.##") + " kJ";
         else
             totalDeltaHText.text = "ΔH: " + deltaH.ToString("0.##") + " kJ";
+        float totalWaste = GameManager.instance.graphController.GetTotalWaste();
+        totalWasteText.text = "Waste: " + totalWaste.ToString("0.##");
         UpdateConnectionLine(connection);
     }
 
