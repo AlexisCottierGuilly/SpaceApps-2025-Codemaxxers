@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using Mono.Cecil;
 using TMPro;
 
 public enum Substance
@@ -181,6 +180,19 @@ public class Process : MonoBehaviour
             if (conn != null)
                 GameManager.instance.connectionPlacement.UpdateConnectionLine(conn.gameObject);
         }
+    }
+
+    public bool HasConnections()
+    {
+        foreach (var conn in inputConnections)
+        {
+            if (conn != null) return true;
+        }
+        foreach (var conn in outputConnections)
+        {
+            if (conn != null) return true;
+        }
+        return false;
     }
 
     public ConnectionManager FindKnob(int index, ConnectionType type)
